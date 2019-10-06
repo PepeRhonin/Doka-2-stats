@@ -46,7 +46,6 @@ var wcolor = d3.scaleLinear()
 	.domain([minWinrate, maxWinrate])
 	.range(["red", "green"])
 
-
 const root = pack(hdata);
 
 let id = 0;
@@ -55,22 +54,25 @@ function generateId() { return id++; }
 
 const svg = d3.select("#bubble");
 
-const win = d3.select("#yeet")
-const game = d3.select("#ree")
+const name = d3.select("#pepega")
 
+const win = d3.select("#yeet")
+
+const game = d3.select("#ree")
 
 function handleMouseOver(d, i) {
   console.log(d.data)
-  let value = d.data.value
-  let name = d.data.name
+
+  d3.selectAll("circle")
+    .attr("fill", d => wcolor(d.data.winrate))
+    .attr("fill-opacity", 0.8);
+
   d3.select(this)
     .attr("fill-opacity", 1)
     .attr("r", d => d.r + 5);
 
-  d3.selectAll("circle")
-    .attr("fill", d => wcolor(d.data.winrate));
-
-  win.text(function() { return `${d.data.name}: ${(d.data.winrate*100).toFixed(1)}%` })
+  name.text(function() { return `${d.data.name}` })
+  win.text(function() { return `${(d.data.winrate*100).toFixed(1)}% winrate` })
   game.text(function() { return `${d.data.value} games played` })
 }
 
@@ -80,8 +82,10 @@ function handleMouseOut(d, i) {
     .attr("r", d => d.r);
 
   d3.selectAll("circle")
-    .attr("fill", d => color(d.data.group));
+    .attr("fill", d => color(d.data.group))
+    .attr("fill-opacity", 0.65);
 
+  name.text(function() { return "" })
   win.text(function() { return "" })
   game.text(function() { return "" })
 }
@@ -113,7 +117,6 @@ leaf.append("text")
       .attr("x", 0)
       .attr("y", (d, i, nodes) => `${i - nodes.length / 2 + 0.8}em`)
       .text(d => d);
-
 
 svg.selectAll("circle")
           .on("mouseover", handleMouseOver)
