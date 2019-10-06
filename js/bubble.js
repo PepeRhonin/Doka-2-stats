@@ -27,8 +27,6 @@ d3.csv("data.csv").then(function(hdata) {
     return a.value < b.value ? 1 : -1;
   }
 
-//hdata.sort(compare);
-
 const pack = data => d3.pack()
     .size([width - 2, height - 2])
     .padding(1)
@@ -55,13 +53,6 @@ let id = 0;
 
 function generateId() { return id++; }
 
-/*const svg = d3.create("svg")
-      .attr("viewBox", [0, 0, width, height])
-      .attr("font-size", 10)
-      .attr("font-family", "sans-serif")
-      .attr("text-anchor", "middle");
-*/
-
 const svg = d3.select('svg');
 
 
@@ -70,16 +61,8 @@ function handleMouseOver(d, i) {
   let value = d.data.value
   let name = d.data.name
   d3.select(this)
-    .attr("fill-opacity", 0.8)
+    .attr("fill-opacity", 1)
     .attr("r", d => d.r + 5);
-
-  /*svg.append("text")
-    .attr("font-szie", 16)
-    .attr("id", "t" + name + value)
-    .attr("x", d3.mouse(this)[0]*2)
-    .attr("y", d3.mouse(this)[1]*2)
-    .text(function() {return name});
-    */
 
   d3.selectAll("circle")
     .attr("fill", d => wcolor(d.data.winrate));
@@ -92,8 +75,6 @@ function handleMouseOut(d, i) {
 
   d3.selectAll("circle")
     .attr("fill", d => color(d.data.group));
-
-  //d3.select("#t" + d.data.name + d.data.value).remove();
 }
 
 
