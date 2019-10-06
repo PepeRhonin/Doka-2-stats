@@ -44,7 +44,7 @@ var color = d3.scaleOrdinal()
 
 var wcolor = d3.scaleLinear()
 	.domain([minWinrate, maxWinrate])
-	.range(["green", "red"])
+	.range(["red", "green"])
 
 
 const root = pack(hdata);
@@ -53,7 +53,10 @@ let id = 0;
 
 function generateId() { return id++; }
 
-const svg = d3.select('svg');
+const svg = d3.select("#bubble");
+
+const win = d3.select("#yeet")
+const game = d3.select("#ree")
 
 
 function handleMouseOver(d, i) {
@@ -66,6 +69,9 @@ function handleMouseOver(d, i) {
 
   d3.selectAll("circle")
     .attr("fill", d => wcolor(d.data.winrate));
+
+  win.text(function() { return `${d.data.name}: ${(d.data.winrate*100).toFixed(1)}%` })
+  game.text(function() { return `${d.data.value} games played` })
 }
 
 function handleMouseOut(d, i) {
@@ -75,6 +81,9 @@ function handleMouseOut(d, i) {
 
   d3.selectAll("circle")
     .attr("fill", d => color(d.data.group));
+
+  win.text(function() { return "" })
+  game.text(function() { return "" })
 }
 
 
